@@ -1,0 +1,3 @@
+/Users/fillipemeireles/Dev/Projects/jailshell-cpp/build/CMakeFiles/jailshell.dir
+/Users/fillipemeireles/Dev/Projects/jailshell-cpp/build/CMakeFiles/edit_cache.dir
+/Users/fillipemeireles/Dev/Projects/jailshell-cpp/build/CMakeFiles/rebuild_cache.dir
