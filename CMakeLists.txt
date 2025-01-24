@@ -12,10 +12,10 @@ find_package(Boost REQUIRED COMPONENTS system filesystem)
 # Add the executable target
 add_executable(jailshell src/main.cpp 
   src/sys/client/client.cpp 
-  src/sys/commands/command.cpp 
   src/sys/core/core.cpp
   src/server/server.cpp
   src/sys/errors/command_not_found_err.cpp
+  src/sys/commands/os_command.cpp
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/include ${Boost_INCLUDE_DIRS})

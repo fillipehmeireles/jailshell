@@ -30,7 +30,7 @@ void Server::Run()
     while (running_) {
       tcp::socket socket(io_context_);
       acceptor_.accept(socket);
-      Sys::Client client(core, std::move(socket));
+      Sys::Client client(std::move(core), std::move(socket));
       std::cout << "[i] New client connected: " 
         <<  client.addr_and_port
         << std::endl;

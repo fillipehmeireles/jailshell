@@ -11,7 +11,7 @@ using boost::asio::ip::tcp;
 Sys::Client::Client(
     Sys::Core c,
     tcp::socket s
-    ):core(c), 
+    ):core(std::move(c)), 
   socket(std::move(s)){
     boost::asio::ip::tcp::endpoint remote_endpoint = socket.remote_endpoint();
     this->addr_and_port = std::format("{0}:{1}",remote_endpoint.address().to_string(), remote_endpoint.port());
@@ -30,8 +30,8 @@ void Sys::Client::HandleConnection()
       std::string input = std::string(data, length);
       try { 
         boost::trim(input);
-        Sys::Commands::Command cmd = core.GetSysCommand(input);
-        std::string result = cmd.Run();
+        Sys::Commands::Command* cmd = core.GetSysCommand(input);
+        std::string result = cmd->Run();
         boost::asio::write(socket, boost::asio::buffer(result, BUFFER_SIZE));
       }
       catch (const std::exception &e) {
