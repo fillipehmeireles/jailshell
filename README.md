@@ -1,6 +1,6 @@
 ## TODO:
-- [] Unit tests
-- [] Implement syscalls
+- [ ] Unit tests
+- [ ] Implement syscalls
 
 
 
