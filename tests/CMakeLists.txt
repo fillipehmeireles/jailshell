@@ -24,4 +24,4 @@ target_link_libraries(
 )
 
 add_test(commands_gtest commands_test)
-add_test(NAME CommandsFixture.LS COMMAND commands_test --gtest_filter=CommandsFixture.LS)
+add_test(NAME CommandsFixture.OSCommand COMMAND commands_test --gtest_filter=CommandsFixture.OSCommand)

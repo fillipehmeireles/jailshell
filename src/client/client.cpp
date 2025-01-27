@@ -5,6 +5,7 @@
 #include <boost/algorithm/string.hpp>
 #include "command_not_found_err.h"
 #include <iostream>
+#include <memory>
 
 using boost::asio::ip::tcp;
 
@@ -31,8 +32,29 @@ void Sys::Client::HandleConnection()
       try { 
         boost::trim(input);
         Sys::Commands::Command* cmd = core.GetSysCommand(input);
-        std::string result = cmd->Run();
-        boost::asio::write(socket, boost::asio::buffer(result, BUFFER_SIZE));
+        std::vector<std::string> args;
+        std::unique_ptr<std::string> result;
+
+        if(cmd->has_args)
+        {
+          std::istringstream stream(input);
+
+          std::string command;
+          stream >> command;  
+
+          std::string remaining;
+          std::getline(stream, remaining);  
+
+          boost::trim(remaining);
+          args.push_back(remaining);
+          result = cmd->RunWithArgs(args); 
+        }
+        else{
+          result = cmd->Run();  
+        }
+
+        if (result != nullptr)
+          boost::asio::write(socket, boost::asio::buffer(*result, BUFFER_SIZE));
       }
       catch (const std::exception &e) {
         if (const Sys::Errors::CommandNotFoundException* cmd_not_found = dynamic_cast<const Sys::Errors::CommandNotFoundException*>(&e)) {
@@ -41,7 +63,7 @@ void Sys::Client::HandleConnection()
           boost::asio::write(socket, boost::asio::buffer(error_msg, BUFFER_SIZE));
         } else {
           std::cout << "[" << addr_and_port << "] " << e.what() << std::endl;
-          std::string error_msg = std::format("Unexpected error: {0}\n",e.what());
+          std::string error_msg = std::format("{0}\n", e.what());
           boost::asio::write(socket, boost::asio::buffer(error_msg, BUFFER_SIZE));
         }
         continue;

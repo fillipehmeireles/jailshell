@@ -1,5 +1,5 @@
 
-add_library(commands commands/os_command.cpp)
+add_library(commands commands/os_command.cpp commands/chdir_command.cpp commands/posix.cpp)
 add_library(core core/core.cpp)
 add_library(errors errors/command_not_found_err.cpp)
 

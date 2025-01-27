@@ -1,15 +1,13 @@
-#pragma once
-
 #include "command.h"
 #include <string>
 #include <vector>
-#include <memory> 
+#include <memory>
 
 namespace Sys {
   namespace Commands {
-    class OSCommand : public Command {
+    class ChdirCommand: public Command {
       public:
-        OSCommand(
+        ChdirCommand(
             std::string al,
             bool os_cmd,
             std::string desc,
@@ -17,13 +15,12 @@ namespace Sys {
             );
 
          std::unique_ptr<std::string>
-         Run() const override;
+          Run() const override;
          std::unique_ptr<std::string>
           RunWithArgs(const std::vector<std::string> args) const override;
     };
-
-  }
-
+  }  
 }
+
 
 

@@ -1,6 +1,7 @@
 ## TODO:
-- [ ] Unit tests
-- [ ] Implement syscalls
+- [x] Unit tests
+- [x] Implement syscalls
+- [ ] Refact Client 
 
 
 
