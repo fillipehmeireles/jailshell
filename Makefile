@@ -1,2 +1,2 @@
-all:
-	mkdir build && cd build && cmake --build .
+config_and_build:
+	cd build && cmake .. && cmake --build .
