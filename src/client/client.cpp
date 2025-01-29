@@ -6,6 +6,7 @@
 #include "command_not_found_err.h"
 #include <iostream>
 #include <memory>
+#include "command_utils.h"
 
 using boost::asio::ip::tcp;
 
@@ -32,21 +33,11 @@ void Sys::Client::HandleConnection()
       try { 
         boost::trim(input);
         Sys::Commands::Command* cmd = core.GetSysCommand(input);
-        std::vector<std::string> args;
+        std::vector<std::string> args = Utils::CommandUtils::PrepareArgsFromInput(input);
         std::unique_ptr<std::string> result;
 
         if(cmd->has_args)
         {
-          std::istringstream stream(input);
-
-          std::string command;
-          stream >> command;  
-
-          std::string remaining;
-          std::getline(stream, remaining);  
-
-          boost::trim(remaining);
-          args.push_back(remaining);
           result = cmd->RunWithArgs(args); 
         }
         else{
